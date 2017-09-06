@@ -1,0 +1,31 @@
+{
+  "name": "adyen-nodejs-api-library",
+  "version": "1.0.0",
+  "description": "API wrapper for Adyen",
+  "keywords": [
+    "adyen",
+    "payment processing",
+    "local payment methods",
+    "alternative payment methods",
+    "credit cards",
+    "api"
+  ],
+  "main": "lib/adyen.js",
+  "dependencies": {
+    "cryptojs": "^2.5.3",
+    "mocha": "^3.4.2"
+  },
+  "engines": {
+    "node": ">=4.2.4"
+  },
+  "devDependencies": {
+    "chai": "^4.0.2",
+    "chai-as-promised": "^7.0.0",
+    "mocha": "^3.4.2"
+  },
+  "scripts": {
+    "test": "mocha --full-trace test.js "
+  },
+  "author": "Adyen <support@adyen.com>",
+  "license": "MIT"
+}

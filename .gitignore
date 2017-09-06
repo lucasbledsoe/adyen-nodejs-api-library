@@ -1,3 +1,5 @@
 node_modules/
 *.log
 app.js
+.DS_Store
+.jshintrc
