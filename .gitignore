@@ -3,3 +3,4 @@ node_modules/
 app.js
 .DS_Store
 .jshintrc
+config.js

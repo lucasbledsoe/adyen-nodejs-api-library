@@ -1,5 +1,5 @@
 {
-  "name": "adyen-nodejs-api-library",
+  "name": "adyen",
   "version": "1.0.0",
   "description": "API wrapper for Adyen",
   "keywords": [
@@ -12,8 +12,7 @@
   ],
   "main": "lib/adyen.js",
   "dependencies": {
-    "cryptojs": "^2.5.3",
-    "mocha": "^3.4.2"
+    "crypto-js": "^3.1.9-1"
   },
   "engines": {
     "node": ">=4.2.4"
@@ -21,10 +20,14 @@
   "devDependencies": {
     "chai": "^4.0.2",
     "chai-as-promised": "^7.0.0",
+    "jshint": "^2.9.5",
     "mocha": "^3.4.2"
   },
   "scripts": {
-    "test": "mocha --full-trace test.js "
+    "test": "npm run jshint && test-pal",
+    "jshint": "jshint lib/*",
+    "test-pal": "mocha --full-trace test/*.js",
+    "test-mp":"mocha --full-trace test/services/marketplace*.js"
   },
   "author": "Adyen <support@adyen.com>",
   "license": "MIT"
