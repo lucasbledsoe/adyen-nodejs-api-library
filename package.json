@@ -15,7 +15,7 @@
     "crypto-js": "^3.1.9-1"
   },
   "engines": {
-    "node": ">=4.2.4"
+    "node": ">=4"
   },
   "devDependencies": {
     "chai": "^4.0.2",
@@ -24,10 +24,10 @@
     "mocha": "^3.4.2"
   },
   "scripts": {
-    "test": "npm run jshint && test-pal",
+    "test": "npm run jshint && npm run test-pal",
     "jshint": "jshint lib/*",
-    "test-pal": "mocha --full-trace test/*.js",
-    "test-mp":"mocha --full-trace test/services/marketplace*.js"
+    "test-pal": "mocha --full-trace --timeout 30000 test/*.js",
+    "test-mp":"mocha --full-trace --timeout 30000 test/services/marketplace*.js"
   },
   "author": "Adyen <support@adyen.com>",
   "license": "MIT"

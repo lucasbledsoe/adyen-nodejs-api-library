@@ -53,35 +53,37 @@ describe('Create Adyen Object', ()=>{
 
 describe('Intentional Errors', ()=>{
   var ady = new Adyen(config.ADYEN_CONFIG);
-  const BASIC_CARD_AUTH_NO_AMOUNT = {
-    card:{
-      number:"4111 1111 1111 1111",
-      holderName:"Test Name",
-      expiryMonth:"10",
-      expiryYear:"2020",
-      cvc:"737"
-    },
-    reference:"testreference"
-  };
-  const BASIC_CARD_AUTH_NO_REF = {
-    amount:{
-      value:100,
-      currency:"EUR"
-    },
-    card:{
-      number:"4111 1111 1111 1111",
-      holderName:"Test Name",
-      expiryMonth:"10",
-      expiryYear:"2020",
-      cvc:"737"
-    }
-  };
+
   describe("InvalidRequestError on auth", () =>{
     it('when missing amount on auth',()=>{
-      return expect(ady.Payment.authorise(BASIC_CARD_AUTH_NO_AMOUNT)).to.eventually.be.rejectedWith(AdyenErrors.InvalidRequestError);
+      return expect(ady.Payment.authorise(config.BASIC_CARD_AUTH_NO_AMOUNT)).to.eventually.be.rejectedWith(AdyenErrors.InvalidRequestError);
     });
     it('when missing reference',()=>{
-      return expect(ady.Payment.authorise(BASIC_CARD_AUTH_NO_REF)).to.eventually.be.rejectedWith(AdyenErrors.InvalidRequestError);
+      return expect(ady.Payment.authorise(config.BASIC_CARD_AUTH_NO_REF)).to.eventually.be.rejectedWith(AdyenErrors.InvalidRequestError);
+    });
+  });
+});
+
+describe('Support Callback and Promises',()=>{
+  const ady = new Adyen(config.ADYEN_CONFIG);
+  it('succesful auth with promise',()=>{
+    return ady.Payment.authorise(config.BASIC_CARD_AUTH)
+    .then(authResult =>{
+      expect(authResult).to.have.property('pspReference');
+      expect(authResult).to.have.property('resultCode','Authorised');
+    });
+  });
+  it('succesful auth with callback',()=>{
+    return ady.Payment.authorise(config.BASIC_CARD_AUTH,(err, authResult)=>{
+      expect(err).to.be.null;
+      expect(authResult).to.have.property('pspReference');
+      expect(authResult).to.have.property('resultCode','Authorised');
+    });
+  });
+  it('error properly passed to callback',()=>{
+    ady.Payment.authorise(config.BASIC_CARD_AUTH_NO_REF,(err)=>{
+      expect(err).to.exist
+      .and.be.instanceOf(AdyenErrors.InvalidRequestError);
     });
   });
 });

@@ -13,7 +13,7 @@ chai.use(chaiAsPromised);
 
 const createAccountHolderRequest = {
   accountHolderCode: config.ACCOUNT_HOLDER_CODE,
-  email:"test@adyen.com",
+  accountHolderDetails:{ email:"test@adyen.com"},
   legalEntity:"Individual"
 };
 
@@ -22,7 +22,9 @@ describe('MarketPlace',()=>{
   describe('Account Service',()=>{
     describe('createAccountHolder',()=>{
       it('not have "InvalidFields" if created succesfully',()=>{
-        return expect(ady.MarketPlace.Account.createAccountHolder(createAccountHolderRequest)).to.eventually.not.have.property('InvalidFields');
+        return ady.MarketPlace.Account.createAccountHolder(createAccountHolderRequest)
+        .then(res=>{console.log(res);return expect(res).to.exists.and.not.have.property('InvalidFields');})
+        .catch(err=>{console.log(err);throw err;});
       });
     });
 
@@ -49,7 +51,7 @@ describe('MarketPlace',()=>{
     describe('uploadDocument',()=>{
     });
     describe('closeAccount',()=>{
-      return expect(ady.MarketPlace.Account.closeAccount());
+      // return expect(ady.MarketPlace.Account.closeAccount());
     });
     describe('closeAccountHolder',()=>{
     });
