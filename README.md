@@ -1,14 +1,15 @@
 # Adyen Nodejs API Library
 
+## Description
 This library wraps the Adyen APIs, performing some client side validation and
-generally simplifies the integration
+generally simplifies the integration.
 
 ## Requirements
-* Node 4>=
+* Node >=4
 * Adyen account. If you don't have this you can request it here: https://www.adyen.com/home/discover/test-account-signup#form
 
 ## Installation
-Clone this git repository. npm access coming soon.
+Clone this git repository to your project. npm access coming soon.
 
 ## QuickStart
 
@@ -35,7 +36,9 @@ adyClient2.merchantAccount = "yourcompany";
 ```
 
 ### Call Adyen API
-Using Adyen's /Payment/authorise
+
+Access APIs using .[service].[method] structure.
+Using Adyen's /Payment/authorise results in adyenClient.Payment.authorise()
 ```js
 const adyenClient = new adyen({
   user:"ws@yourcompany",
@@ -67,7 +70,7 @@ adyenClient.Payment.authorise({
 ```
 
 ## Callbacks / Promises
-Library supports callbacks and promises
+Library supports callbacks and promises.
 
 ```js
 const adyenClient = new adyen({
