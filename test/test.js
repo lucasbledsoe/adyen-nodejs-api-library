@@ -182,6 +182,24 @@ describe('HPP Service', () => {
   });
 });
 
+describe('Checkout Service', ()=>{
+  var authResult = {};
+  const ady = new Adyen(config.ADYEN_CONFIG);
+  describe('payments',()=>{
+    const CARD_AUTH_INIT_RECUR_CHECKOUT = Object.assign({}, config.BASIC_CARD_AUTH_CHECKOUT,{
+      shopperReference:config.SHOPPER_REFERENCE,
+    });
+    it('pspreference on succesful auth',()=>{
+      return ady.Checkout.payments(CARD_AUTH_INIT_RECUR_CHECKOUT)
+      .then(res =>{
+        Object.assign(authResult, res);
+        expect(authResult).to.have.property('pspReference');
+        expect(authResult).to.have.property('resultCode','Authorised');
+      });
+    });
+  });
+});
+
 describe('Recurring Service',()=>{
   const ady = new Adyen(config.ADYEN_CONFIG);
   describe('listRecurringDetails',()=>{
@@ -204,3 +222,114 @@ describe('Recurring Service',()=>{
     });
   });
 });
+
+/*
+describe('Payout Service',()=>{
+  const ady = new Adyen(config.ADYEN_CONFIG);
+  const SDASRequest = {
+      "amount" : {
+          "currency" : "EUR",
+          "value" : "1000"
+      },
+
+      "bank": {
+          "bankName": "AbnAmro",
+          "bic": "ABNANL2A",
+          "countryCode": "NL",
+          "iban": "NL32ABNA0515071439",
+          "ownerName": "Adyen",
+          "bankCity": "Amsterdam",
+          "taxId":"bankTaxId"
+      },
+
+      "merchantAccount" : "TestMerchant",
+
+      "recurring" : {
+          "contract" : "PAYOUT"
+      },
+
+      "reference" : 'merchantReference' + config.RANDOM_INT,
+      "shopperEmail" : "shopper@email.com",
+      "shopperReference" : config.SHOPPER_REFERENCE,
+      "shopperName" : {
+          "firstName" : "Adyen",
+          "gender" : "MALE",
+          "lastName" : "Test"
+      },
+      "dateOfBirth" : "1990-01-01",
+      "entityType" : "Company",
+      "nationality" : "NL",
+
+      "billingAddress": {
+          "houseNumberOrName":"17",
+          "street":"Teststreet 1",
+          "city":"Amsterdam",
+          "stateOrProvince":"NY",
+          "country" : "US",
+          "postalCode":"12345"
+      }
+  };
+  const SDRequest = {
+      "recurring" : {
+        "contract" : "PAYOUT"
+    },
+
+    "bank": {
+        "bankName": "AbnAmro",
+        "bic": "ABNANL2A",
+        "countryCode": "NL",
+        "iban": "NL32ABNA0515071439",
+        "ownerName": "Adyen",
+        "bankCity": "Amsterdam",
+        "taxId":"bankTaxId"
+    },
+
+    "shopperEmail" : "shopper@email.com",
+    "shopperReference" : config.SHOPPER_REFERENCE,
+    "shopperName" : {
+        "firstName" : "Adyen",
+        "gender" : "MALE",
+        "lastName" : "Test"
+    },
+    "dateOfBirth" : "1990-01-01",
+    "entityType" : "Company",
+    "nationality" : "NL",
+
+    "billingAddress": {
+        "houseNumberOrName":"17",
+        "street":"Teststreet 1",
+        "city":"Amsterdam",
+        "stateOrProvince":"NY",
+        "country" : "US",
+        "postalCode":"12345"
+    }
+  };
+  var psp = '';
+  describe('storeDetailAndSubmitThirdParty',()=>{
+    it('return [payout-submit-received]',()=>{
+      return ady.Payout.storeDetailAndSubmitThirdParty(SDASRequest)
+      .then((adyenResult)=>{
+        psp = adyenResult.pspReference;
+        return expect(adyenResult).to.have.property('resultCode','[payout-submit-received]');
+      });
+    });
+  });
+  describe('confirmThirdParty',()=>{
+    it('return [payout-confirm-received]',()=>{
+      return expect(ady.Payots.confirmThirdParty({originalReference:psp}))
+      .to.eventually.have.property('resultCode', '[payout-confirm-received]');
+    });
+  });
+  describe('submitThirdParty',()=>{
+    return expect(ady.Payout.submitThirdParty())
+
+  });
+  describe('confirmThirdParty',()=>{});
+  describe('declineThirdParty',()=>{});
+  describe('storeDetail',()=>{});
+  describe('storeDetailAndSubmit',()=>{});
+  describe('submit',()=>{});
+  describe('confirm',()=>{});
+  describe('decline',()=>{});
+});
+*/

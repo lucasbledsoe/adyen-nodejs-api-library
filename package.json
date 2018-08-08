@@ -27,7 +27,8 @@
     "test": "npm run jshint && npm run test-pal",
     "jshint": "jshint lib/*",
     "test-pal": "mocha --full-trace --timeout 30000 test/*.js",
-    "test-mp":"mocha --full-trace --timeout 30000 test/services/marketplace*.js"
+    "test-mp":"mocha --full-trace --timeout 30000 test/services/marketplace*.js",
+    "test-checkout":"mocha --full-trace --timeout 30000 test/services/checkout*.js"
   },
   "author": "Adyen <support@adyen.com>",
   "license": "MIT"
